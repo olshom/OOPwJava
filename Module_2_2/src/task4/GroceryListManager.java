@@ -8,19 +8,12 @@ public class GroceryListManager {
     private Map<Map<String, Map<String, Double>>, Integer> groceryListWQuantity = new HashMap<>();
 
     public void addItem(String item, double cost, String category, int quantity) {
+        Map<String, Map<String, Double>> groceryList = new HashMap<>();
         Map<String, Double> itemOfCategory = new HashMap<>();
-        Map<String, Map<String, Double>> categoryList = new HashMap<>();
+        itemOfCategory.put(item, cost);
+        groceryList.put(category, itemOfCategory);
 
-        if(categoryList.containsKey(category)){
-            Map<String, Double> existingCat = categoryList.get(category);
-            existingCat.put(item, cost);
-            groceryListWQuantity.put(Map<categoryList.get(category),>)
-        } else {
-            itemOfCategory.put(item, cost);
-            categoryList.put(category, itemOfCategory);
-
-        }
-
+        groceryListWQuantity.put(groceryList,quantity);
     }
     public void displayByCategory(String category){
         for (Map.Entry<Map<String, Map<String, Double>>, Integer> element : groceryListWQuantity.entrySet()) {
@@ -47,6 +40,7 @@ public class GroceryListManager {
     public static void main (String[] args) {
         GroceryListManager myList = new GroceryListManager();
         myList.addItem("bread", 1.5, "bakery", 2);
+        myList.addItem("bun", 1.5, "bakery", 2);
         myList.addItem("apples", 3, "vegetables", 2);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a category: ");
