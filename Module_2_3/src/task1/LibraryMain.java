@@ -10,12 +10,19 @@ public class LibraryMain {
         library.addBook(book2);
         library.addBook(book3);
         library.displayBooks();
+        System.out.println();
         library.findBooksByAuthor("Lev Tolstoy");
+        System.out.println();
 
-        library.borrowBook("War and Peace");
+        library.addUser(new User("Iron Man", 45));
+        library.addUser(new User("Capitan America", 105));
+
+        library.borrowBook("War and Peace", "Iron Man");
         library.displayBooks();
-        library.returnBook(book1);
+        System.out.println();
+        library.returnBook(book1, "Iron Man");
         library.displayBooks();
+        System.out.println();
 
         System.out.println("\nIs 'The Art of Fiction' available? " + library.isBookAvailable("The Art of Fiction"));
 
