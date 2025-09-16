@@ -1,3 +1,5 @@
+package task2;
+
 import java.lang.Thread;
 
 public class Summation extends Thread {
