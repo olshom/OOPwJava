@@ -14,6 +14,7 @@ public class Thread extends java.lang.Thread {
             while (number < 21) {
                 System.out.println(message + " " + number);
                 this.number +=2;
+                java.lang.Thread.yield();
                 java.lang.Thread.sleep(delay);
             }
         } catch (InterruptedException e) {
@@ -22,7 +23,9 @@ public class Thread extends java.lang.Thread {
     }
 
     public static void main(String[] args) {
+
         new Thread(1, 10, "Odd Thread").start();
-        new Thread(2, 0, "Even Thread").start();
+        new Thread(2, 10, "Even Thread").start();
+
     }
 }

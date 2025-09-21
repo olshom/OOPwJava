@@ -3,7 +3,7 @@ package task2;
 import java.util.ArrayList;
 
 public class TaskSplitDemo {
-    private static final int N = 1000000;
+    private static final int N = 20;
 
     public static void execute(int[] array, int cores) {
         /* split the task to individual threads */
@@ -17,6 +17,7 @@ public class TaskSplitDemo {
                 sliceend = (int)Math.round((i+1)*dy);
 
             /* Then create Summation thread/job for that part of the array */
+            System.out.println("Thread " + i + " processing elements " + slicestart + " to " + (sliceend-1));
             mathunters.add(new Summation(array, slicestart, sliceend-1));
         }
 
