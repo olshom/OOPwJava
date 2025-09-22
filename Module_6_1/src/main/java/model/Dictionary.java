@@ -14,6 +14,12 @@ public class Dictionary {
     }
 
     public String getDefinition(String word) {
+        if (word.isEmpty()) {
+            return "Please enter a word";
+        }
+        if (!dictionary.containsKey(word)) {
+            return "Word not found";
+        }
         return dictionary.get(word);
     }
     public void preload () {
