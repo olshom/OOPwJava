@@ -1,3 +1,5 @@
+package task1;
+
 public class Customer implements Runnable{
     private Theater theater;
     private int id;

@@ -42,5 +42,4 @@ public class Calculator {
             System.out.println(e.getMessage()); // Should print the error message
         }
     }
-
 }

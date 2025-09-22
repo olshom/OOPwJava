@@ -24,7 +24,7 @@ public class Customer {
         return endTime;
     }
 
-    public void setEndTime(long endTime) {
+    public void setEndTime(double endTime) {
         this.endTime = endTime;
     }
 

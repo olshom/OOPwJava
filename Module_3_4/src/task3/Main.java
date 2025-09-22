@@ -22,7 +22,7 @@ public class Main {
         enrollments.add(enrollment1);
         enrollments.add(enrollment2);
 
-        try (FileOutputStream outputStream = new FileOutputStream(FILENAME);
+        try (FileOutputStream outputStream = new FileOutputStream(f);
              ObjectOutputStream objects = new ObjectOutputStream(outputStream);
         ) {
             objects.writeObject(enrollments);
@@ -30,13 +30,13 @@ public class Main {
             System.err.println(e);
         }
 
-        try (FileInputStream inputStream = new FileInputStream(FILENAME);
+        try (FileInputStream inputStream = new FileInputStream(f);
         ObjectInputStream objects = new ObjectInputStream(inputStream);
         ) {
             //            Enrollment enrollment = new Enrollment();
             Enrollment[] enrollmentsDes = (Enrollment[]) objects.readObject();
-//            var list = Arrays.stream(enrollmentsDes).toList();
-            for(Enrollment enr: enrollmentsDes) {
+            var list = Arrays.stream(enrollmentsDes).toList();
+            for(Enrollment enr: list) {
                 System.out.println(enr);
             }
         } catch (Exception e){

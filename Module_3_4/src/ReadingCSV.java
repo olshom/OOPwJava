@@ -1,9 +1,10 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.*;
 import java.net.*;
 
 public class ReadingCSV {
     public static void main(String[] args) {
-        // first, create the url
 
         double sum = 0.0;
         int count = 0;
@@ -11,33 +12,39 @@ public class ReadingCSV {
         int indexUlkoTalo = -1;
         URL myUrl;
         String line;
-        String[] columnNames = new String[0];
-        boolean header = true;
+        String[] columnNames;
+        boolean header = false;
         try {
             myUrl = new URL("https://users.metropolia.fi/~jarkkov/temploki.csv");
         } catch (MalformedURLException e) {
             System.err.println(e);
             return;
         }
-
+        System.out.println("Reading data from " + myUrl+" ...");
         try (
+
                 InputStream istream = myUrl.openStream();
                 InputStreamReader istreamreader = new InputStreamReader(istream);
                 BufferedReader bufferedstream = new BufferedReader(istreamreader);
         ) {
+            System.out.println("Opened the stream, reading data ...");
             do {
+                System.out.println("Reading line ...");
                 line = bufferedstream.readLine();
+                System.out.println(line);
                 if (line != null) {
-                    if (header) {
+                    if (!header) {
                         // first row of the file contains names of columns
                         columnNames = line.split(";");
-                        header = false;
+                        header = true;
                         for (int i = 0; i < columnNames.length; i++) {
                             if (columnNames[i].equals("UlkoTalo")) {
                                 indexUlkoTalo = i;
+                                System.out.println("Index of UlkoTalo: " + indexUlkoTalo);
                             }
                             if (columnNames[i].equals("Aika")) {
                                 indexTime = i;
+                                System.out.println("Index of Aika: " + indexTime);
                             }
                         }
                     } else if (indexTime != -1 && indexUlkoTalo != -1){
