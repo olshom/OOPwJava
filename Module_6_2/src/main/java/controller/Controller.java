@@ -6,6 +6,7 @@ import view.ConverterView;
 public class Controller {
     Converter converter = new Converter();
     private ConverterView view;
+
     public Controller(ConverterView view) {
         this.view = view;
     }

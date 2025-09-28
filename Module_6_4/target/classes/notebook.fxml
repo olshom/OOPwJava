@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.noteController">
+   <children>
+      <VBox>
+         <children>
+            <Label text="Title" />
+            <TextField fx:id="noteTitle" />
+            <Label text="Content" />
+            <TextArea fx:id="noteContent" prefHeight="200.0" prefWidth="200.0" />
+            <Button fx:id="addNote" mnemonicParsing="false" onAction="#onAddNote" text="Add" />
+            <ListView fx:id="notesList" prefHeight="200.0" prefWidth="200.0" />
+            <Button mnemonicParsing="false" onAction="#onDeleteNote" text="Delete" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
