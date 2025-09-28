@@ -13,7 +13,12 @@
             <TextArea fx:id="noteContent" prefHeight="200.0" prefWidth="200.0" />
             <Button fx:id="addNote" mnemonicParsing="false" onAction="#onAddNote" text="Add" />
             <ListView fx:id="notesList" prefHeight="200.0" prefWidth="200.0" />
-            <Button mnemonicParsing="false" onAction="#onDeleteNote" text="Delete" />
+            <FlowPane>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onDeleteNote" text="Delete" />
+                  <Button mnemonicParsing="false" onAction="#onEditNote" text="Edit" />
+               </children>
+            </FlowPane>
          </children>
       </VBox>
    </children>

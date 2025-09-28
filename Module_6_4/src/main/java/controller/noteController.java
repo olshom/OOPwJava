@@ -36,7 +36,15 @@ public class noteController {
         Note note = notebook.getNotes().get(selectedIndex);
         notebook.removeNote(note);
         notesList.getItems().remove(selectedIndex);
-        System.out.println("Note deleted: " + note.getTitle());
     }
 
+    @FXML
+    private void onEditNote(ActionEvent event) {
+        int selectedIndex = notesList.getSelectionModel().getSelectedIndex();
+        Note note = notebook.getNotes().get(selectedIndex);
+        noteTitle.setText(note.getTitle());
+        noteContent.setText(note.getContent());
+        notebook.removeNote(note);
+        notesList.getItems().remove(selectedIndex);
+    }
 }
