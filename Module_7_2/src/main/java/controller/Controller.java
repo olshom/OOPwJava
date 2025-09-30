@@ -19,11 +19,10 @@ public class Controller {
         try {
             Currency currencyFrom = currencyDao.getCurrencyByAbbreviation(from);
             Currency currencyTo = currencyDao.getCurrencyByAbbreviation(to);
-
-        double rateFrom = currencyFrom.getRateToEUR();
+            double rateFrom = currencyFrom.getRateToEUR();
         double rateTo = currencyTo.getRateToEUR();
-        double amountInEur = amount / rateFrom;
-        return amountInEur * rateTo;
+        double amountInEur = amount * rateFrom;
+        return amountInEur / rateTo;
         } catch (Exception e) {
             view.showDatabaseError(e.getMessage());
             return -1;
