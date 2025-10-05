@@ -24,3 +24,4 @@ VALUES
 DROP USER IF EXISTS 'appuser'@'localhost';
 CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'password';
 GRANT SELECT ON currencyRates.* TO 'appuser'@'localhost';
+GRANT INSERT ON currencyRates.* TO 'appuser'@'localhost';
