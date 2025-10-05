@@ -1,37 +1,19 @@
 package datasource;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import jakarta.persistence.*;
 
 public class MariaDbConnection {
+    private static EntityManagerFactory entityManagerFactory;
+    private static EntityManager entityManager;
 
-    private static Connection conn = null;
-
-    public static Connection getConnection() {
-        if (conn==null) {
-            // connect if necessary
-            try {
-                conn = DriverManager.getConnection(
-                        "jdbc:mariadb://localhost:3306/currencyRates?user=appuser&password=password");
-            } catch (SQLException e) {
-                System.out.println("Connection failed.");
-                e.printStackTrace();
+    public static EntityManager getInstance() {
+        if (entityManager == null) {
+            if (entityManagerFactory == null) {
+                entityManagerFactory = Persistence.createEntityManagerFactory("CurrencyRatesMariaDbUnit");
             }
-            return conn;
+            entityManager = entityManagerFactory.createEntityManager();
         }
-        else {
-            return conn;
-        }
-    }
-
-    public static void terminate() {
-        try {
-            getConnection().close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        return entityManager;
     }
 }
 

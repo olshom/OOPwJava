@@ -1,5 +1,5 @@
 package view;
-import controller.Controller;
+import application.ConverterApp;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class ConverterView extends Application{
-    public Controller controller = new Controller(this);
+    public ConverterApp controller = new ConverterApp(this);
     String selectedFrom;
     String selectedTo;
 
@@ -69,6 +69,55 @@ public class ConverterView extends Application{
                 result.setText("Invalid input");
             }
         });
+        Button insertNewCurrency = new Button("Insert new currency");
+        insertNewCurrency.setOnAction((event) -> {
+            Stage newCurrencyView = new Stage();
+            VBox newCurrencyLayout = new VBox();
+            TextField abbreviation = new TextField("Abbreviation");
+            TextField name = new TextField("Name");
+            TextField rate = new TextField("Exchange rate to EUR");
+            Button saveButton = new Button("Save");
+            newCurrencyLayout.getChildren().addAll(abbreviation, name, rate, saveButton);
+            Scene newCurrencyScene = new Scene(newCurrencyLayout);
+            newCurrencyView.setTitle("Insert New Currency");
+            newCurrencyView.setScene(newCurrencyScene);
+            saveButton.setOnAction((e) -> {
+                String abbr = abbreviation.getText();
+                String nm = name.getText();
+                double rt;
+                try {
+                    rt = Double.parseDouble(rate.getText());
+                } catch (NumberFormatException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Input Error");
+                    alert.setHeaderText("Invalid Exchange Rate");
+                    alert.setContentText("Please enter a valid number for the exchange rate.");
+                    alert.showAndWait();
+                    return;
+                }
+                try {
+                    controller.insertCur(abbr, nm, rt);
+                    List<String> updatedCurrencies = controller.getAllCurrencyAbbreviations();
+                    group.getItems().clear();
+                    group.getItems().addAll(updatedCurrencies);
+                    group.setValue(updatedCurrencies.get(0));
+                    selectedFrom = updatedCurrencies.get(0);
+                    groupResult.getItems().clear();
+                    groupResult.getItems().addAll(updatedCurrencies);
+                    groupResult.setValue(updatedCurrencies.get(0));
+                    selectedTo = updatedCurrencies.get(0);
+                    newCurrencyView.close();
+                } catch (Exception ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Database Error");
+                    alert.setHeaderText("Failed to Add Currency");
+                    alert.setContentText(ex.getMessage());
+                    alert.showAndWait();
+                }
+            });
+            newCurrencyView.show();
+        });
+        layout.getChildren().add(insertNewCurrency);
         Scene view = new Scene(layout);
         window.setTitle("Currency Converter");
         window.setScene(view);

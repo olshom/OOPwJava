@@ -1,28 +1,37 @@
-package controller;
+package application;
 
-import dao.CurrencyDao;
 import entity.Currency;
+import dao.CurrencyDao;
 import view.ConverterView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Controller {
+public class ConverterApp {
     private ConverterView view;
-    private CurrencyDao currencyDao;
+    private CurrencyDao currencyDao = new CurrencyDao();
 
-    public Controller(ConverterView view) {
+    public ConverterApp(ConverterView view) {
         this.view = view;
-        this.currencyDao = new CurrencyDao();
     }
+
+    public void insertCur( String abb, String name, double rate) {
+        try {
+            Currency currency = new Currency(abb, name, rate);
+            currencyDao.persist(currency);
+        } catch (Exception e) {
+            view.showDatabaseError(e.getMessage());
+        }
+    }
+
     public double convert (double amount, String from, String to) {
         try {
             Currency currencyFrom = currencyDao.getCurrencyByAbbreviation(from);
             Currency currencyTo = currencyDao.getCurrencyByAbbreviation(to);
-            double rateFrom = currencyFrom.getRateToEUR();
-        double rateTo = currencyTo.getRateToEUR();
-        double amountInEur = amount * rateFrom;
-        return amountInEur / rateTo;
+            double rateFrom = currencyFrom.getExchangeRateToEUR();
+            double rateTo = currencyTo.getExchangeRateToEUR();
+            double amountInEur = amount * rateFrom;
+            return amountInEur / rateTo;
         } catch (Exception e) {
             view.showDatabaseError(e.getMessage());
             return -1;
@@ -31,7 +40,7 @@ public class Controller {
 
     public List<String> getAllCurrencyAbbreviations() {
         try{
-            List<Currency> currencies = currencyDao.getAllCurrencies();
+            List<Currency> currencies = currencyDao.findAll();
             List<String> abbreviations = new ArrayList<>();
             for (Currency currency : currencies) {
                 abbreviations.add(currency.getAbbreviation());
@@ -42,7 +51,6 @@ public class Controller {
             return new ArrayList<>();
         }
     }
-
 
     public static void main(String[] args) {
         ConverterView.launch(ConverterView.class);
