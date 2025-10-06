@@ -8,9 +8,18 @@ CREATE TABLE currencies (
     exchangeRateToEUR DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (id)
 );
+CREATE TABLE transactions (
+    id INT NOT NULL AUTO_INCREMENT,
+    amount DECIMAL(15, 2) NOT NULL,
+    currencyFrom_id INT,
+    currencyTo_id INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (currencyFrom_id) REFERENCES currencies(id),
+    FOREIGN KEY (currencyTo_id) REFERENCES currencies(id)
+);
 INSERT INTO currencies (abbreviation, name, exchangeRateToEUR)
 VALUES
-  ('EUR', 'Euro', 1.00),
+('EU', 'Euro', 1),
   ('USD', 'US Dollar', 0.86),
   ('GBP', 'British Pound', 1.16),
   ('JPY', 'Japanese Yen', 0.0059),
@@ -24,3 +33,5 @@ VALUES
 DROP USER IF EXISTS 'appuser'@'localhost';
 CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'password';
 GRANT SELECT ON currencyRates.* TO 'appuser'@'localhost';
+GRANT INSERT ON currencyRates.* TO 'appuser'@'localhost';
+GRANT CREATE, DROP, ALTER ON currencyRates.* TO 'appuser'@'localhost';

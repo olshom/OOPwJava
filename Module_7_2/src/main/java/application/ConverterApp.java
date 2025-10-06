@@ -1,7 +1,8 @@
 package application;
 
 import entity.Currency;
-import dao.CurrencyDao;
+import dao.*;
+import entity.Transaction;
 import view.ConverterView;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 public class ConverterApp {
     private ConverterView view;
     private CurrencyDao currencyDao = new CurrencyDao();
+    TransactionDao transactionDao = new TransactionDao();
 
     public ConverterApp(ConverterView view) {
         this.view = view;
@@ -28,6 +30,8 @@ public class ConverterApp {
         try {
             Currency currencyFrom = currencyDao.getCurrencyByAbbreviation(from);
             Currency currencyTo = currencyDao.getCurrencyByAbbreviation(to);
+            transactionDao.persist(new Transaction(amount, currencyFrom, currencyTo));
+
             double rateFrom = currencyFrom.getExchangeRateToEUR();
             double rateTo = currencyTo.getExchangeRateToEUR();
             double amountInEur = amount * rateFrom;

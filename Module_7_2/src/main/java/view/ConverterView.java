@@ -32,7 +32,7 @@ public class ConverterView extends Application{
 
         ComboBox<String> group = new ComboBox<>();
         group.getItems().addAll(currencies);
-        group.setValue(currencies.get(0));
+        group.setValue(currencies.getFirst());
         selectedFrom = currencies.get(0);
         group.setOnAction(actionEvent -> {
             selectedFrom = group.getValue();
